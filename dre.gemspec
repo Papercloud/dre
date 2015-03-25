@@ -11,14 +11,14 @@ Gem::Specification.new do |s|
   s.email       = ["a.ivanopoulos@gmail.com"]
   s.homepage    = "http://www.papercloud.com.au"
   s.summary     = "A device registration engine for Rails."
-  s.description = "A device registration engine for Rails."
+  s.description = "An engine to easily add in a Device model and registration / deregistration system by supplying a token provided mobile applications. Provides easy associations to device owner models."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency 'rails', '~> 4.2.1'
-  s.add_dependency 'responders', '>= 1.0'
+  s.add_dependency 'rails', '~> 4.0'
+  s.add_dependency 'responders', '~> 1.0'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails', '~> 3.0'
