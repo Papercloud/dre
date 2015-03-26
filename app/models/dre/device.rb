@@ -15,7 +15,7 @@ module Dre
     private
 
     def invalidate_used_token
-      Device.where(token: token).where.not(id: id).delete_all
+      Device.where(token: token).where('id != ?', id).delete_all
     end
 
     class << self

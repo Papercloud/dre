@@ -11,18 +11,18 @@ module Dre
     end
 
     def register
-      @device = collection.find_by(token: params[:token]) || Device.new(owner: user, token: params[:token])
+      @device = collection.where(token: params[:token]).first || Device.new(owner: user, token: params[:token])
       response = @device.persisted? ? 200 : 201
 
       if @device.save
-        render json: { device: @device }, status: response
+        render json: { device: @device }, root: false, status: response
       else
         render json: { errors: @device.errors }, status: :unprocessable_entity
       end
     end
 
     def deregister
-      @device = collection.find_by(token: params[:token])
+      @device = collection.where(token: params[:token]).first
 
       if @device.nil?
         render nothing: true, status: :not_found
