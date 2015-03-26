@@ -5,7 +5,9 @@ require 'rspec/rails'
 require 'factory_girl_rails'
 require 'pry'
 
-ActiveRecord::Migration.maintain_test_schema!
+if defined?(ActiveRecord::Migration.maintain_test_schema!)
+  ActiveRecord::Migration.maintain_test_schema!
+end
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
