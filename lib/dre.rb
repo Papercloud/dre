@@ -1,4 +1,6 @@
 require 'dre/engine'
+require 'dre/rails/routes'
+
 require 'responders'
 
 module Dre
