@@ -2,8 +2,6 @@ require 'rails_helper'
 
 module Dre
   RSpec.describe DevicesController, type: :controller do
-    routes { Dre::Engine.routes }
-
     let(:user) { User.create }
 
     before :each do
