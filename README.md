@@ -31,17 +31,27 @@ end
 Mount the engine in your `routes.rb` file:
 ```
 Rails.application.routes.draw do
-  mount Dre::Engine => '/'
+  mount_dre
 end
 ```
 
 This will add three routes into your application:
 
-|                           |                                                       |
+| Route                     | Description                                           |
 |---------------------------|-------------------------------------------------------|
 | `GET /devices`            | Get all of the devices for the current user           |
 | `PUT /devices/:token`     | Register a new device if it doesn't exist             |
 | `DELETE /devices/:token`  | Deregister the device belonging to the supplied token |
+
+The routes for Dre can be customised to point to a custom controller:
+```
+Rails.application.routes.draw do
+  mount_dre do
+    controllers devices: 'custom_devices'
+  end
+end
+```
+And this will point the routes to the `custom_devices` controller, as opposed to the `dre/devices` controller baked into the engine.
 
 ## Configuration
 
