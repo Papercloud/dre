@@ -2,7 +2,7 @@ module Dre
   class Device < ActiveRecord::Base
     # OS:
     enum platform: {
-      iphone: 1,
+      ios: 1,
       android: 2
     }
 

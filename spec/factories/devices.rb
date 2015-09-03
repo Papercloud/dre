@@ -6,6 +6,6 @@ FactoryGirl.define do
 
     owner_id 1
     owner_type 'User'
-    platform :iphone
+    platform :ios
   end
 end
