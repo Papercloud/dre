@@ -42,10 +42,10 @@ module Dre
           as: :devices,
           path: 'devices',
           only: [:index],
-        )
-
-        routes.put    'devices/:token', controller: mapping[:controllers], action: :register
-        routes.delete 'devices/:token', controller: mapping[:controllers], action: :deregister
+        ) do |scope|
+          routes.put    ':token', controller: mapping[:controllers], action: :register, on: :collection
+          routes.delete ':token', controller: mapping[:controllers], action: :deregister, on: :collection
+        end
       end
     end
   end
