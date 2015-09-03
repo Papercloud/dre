@@ -5,10 +5,10 @@ module Dre
     private
 
     def detect_platform
-      if iphone?
-        1
+      if ios?
+        :ios
       elsif android?
-        2
+        :android
       end
     end
 
@@ -18,7 +18,7 @@ module Dre
       end
     end
 
-    def iphone?
+    def ios?
       !!(platform_header.downcase =~ /iphone|ipad/)
     end
 
