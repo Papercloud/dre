@@ -4,6 +4,7 @@ class DreCreateDevices < ActiveRecord::Migration
       t.string :token
       t.integer :owner_id
       t.string :owner_type
+      t.integer :platform
 
       t.timestamps null: false
     end

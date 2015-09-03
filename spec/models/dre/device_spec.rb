@@ -3,30 +3,14 @@ require 'rails_helper'
 module Dre
   RSpec.describe Device, type: :model do
     describe 'associations' do
-      it 'belongs to an owner' do
-        @user = User.create
-        @device = create(:device, owner: @user)
-
-        expect(@user.devices).to include(@device)
-      end
+      it { should belong_to(:owner) }
     end
 
     describe 'validations' do
-      before :each do
-        @device = build(:device)
-      end
-
-      it 'cannot be created without a token' do
-        @device.token = nil
-
-        expect(@device).to_not be_valid
-      end
-
-      it 'cannot be created without a owner' do
-        @device.owner = nil
-
-        expect(@device).to_not be_valid
-      end
+      it { should validate_presence_of(:platform) }
+      it { should validate_presence_of(:token) }
+      it { should validate_presence_of(:owner_id) }
+      it { should validate_presence_of(:owner_type) }
     end
 
     describe 'hooks' do

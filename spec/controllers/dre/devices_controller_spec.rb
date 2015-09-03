@@ -5,6 +5,7 @@ module Dre
     let(:user) { User.create }
 
     before :each do
+      request.env['X-User-Platform'] = 'iPhone'
       allow(controller).to receive(:authenticate!) { true }
       allow(controller).to receive(:user) { user }
     end
@@ -27,28 +28,57 @@ module Dre
 
     describe 'PUT #register' do
       context 'registering a new device' do
-        it 'should return a 201' do
+        it 'returns a 201' do
           put :register, format: :json, token: 'Test Token'
 
           expect(response.status).to eq 201
         end
 
-        it 'should create the device' do
+        it 'creates the device' do
           expect do
             put :register, format: :json, token: 'Test Token'
           end.to change(Device, :count).by(1)
         end
 
-        it 'should return the new device' do
+        it 'returns the new device' do
           put :register, format: :json, token: 'Test Token'
 
           expect(json['device']['id']).to_not be_nil
           expect(json['device']['token']).to eq 'Test Token'
         end
+
+        it 'detects iphones as the ios platform' do
+          request.env['X-User-Platform'] = 'iPhone'
+
+          put :register, format: :json, token: 'Test Token'
+          expect(json['device']['platform']).to eq 'ios'
+        end
+
+        it 'detects ipads as the ios platform' do
+          request.env['X-User-Platform'] = 'iPad'
+
+          put :register, format: :json, token: 'Test Token'
+          expect(json['device']['platform']).to eq 'ios'
+        end
+
+        it 'detects androids as the android platform' do
+          request.env['X-User-Platform'] = 'Android'
+
+          put :register, format: :json, token: 'Test Token'
+          expect(json['device']['platform']).to eq 'android'
+        end
+
+        it 'raises an error if no platform is specified' do
+          request.env['X-User-Platform'] = nil
+
+          expect do
+            put :register, format: :json, token: 'Test Token'
+          end.to raise_error
+        end
       end
 
       context 'registering an existing device' do
-        it "should create a new device if it's registered to another user" do
+        it "creates a new device if it's registered to another user" do
           @device = create(:device, owner: User.create, token: 'Test Token')
 
           put :register, format: :json, token: @device.token
@@ -57,7 +87,7 @@ module Dre
           expect(json['device']['token']).to eq @device.token
         end
 
-        it "should return the existing device if it's registered to the current user" do
+        it "returns the existing device if it's registered to the current user" do
           @device = create(:device, owner: user, token: 'Test Token')
 
           put :register, format: :json, token: @device.token
@@ -72,13 +102,13 @@ module Dre
           @device = create(:device, owner: user)
         end
 
-        it 'should delete the device' do
+        it 'deletes the device' do
           delete :deregister, format: :json, token: @device.token
 
           expect(response).to have_http_status(:success)
         end
 
-        it 'should return 404 if trying to deregister a nonexistent device' do
+        it 'returns 404 if trying to deregister a nonexistent device' do
           delete :deregister, format: :json, token: 'Some Other Token'
 
           expect(response).to have_http_status(:not_found)

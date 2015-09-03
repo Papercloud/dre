@@ -12,6 +12,8 @@ module Dre
 
     def register
       @device = collection.where(token: params[:token]).first || Device.new(owner: user, token: params[:token])
+      @device.platform = detect_platform
+
       response = @device.persisted? ? 200 : 201
 
       if @device.save
