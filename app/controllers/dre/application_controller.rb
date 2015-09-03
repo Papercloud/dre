@@ -1,5 +1,7 @@
 module Dre
   class ApplicationController < ActionController::Base
+    class NilPlatform < RuntimeError ; end
+
     private
 
     def detect_platform
@@ -11,7 +13,9 @@ module Dre
     end
 
     def platform_header
-      request.env['X-User-Platform']
+      request.env['X-User-Platform'].tap do |header|
+        raise Dre::NilPlatform unless header.present?
+      end
     end
 
     def iphone?
