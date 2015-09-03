@@ -5,6 +5,7 @@ module Dre
     let(:user) { User.create }
 
     before :each do
+      request.env['X-User-Platform'] = 'iPhone'
       allow(controller).to receive(:authenticate!) { true }
       allow(controller).to receive(:user) { user }
     end
