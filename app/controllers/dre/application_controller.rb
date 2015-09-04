@@ -13,7 +13,7 @@ module Dre
     end
 
     def platform_header
-      request.env['X-User-Platform'].tap do |header|
+      request.header['X-User-Platform'].tap do |header|
         raise Dre::NilPlatform unless header.present?
       end
     end
