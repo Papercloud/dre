@@ -1,6 +1,6 @@
 module Dre
   class ApplicationController < ActionController::Base
-    class NilPlatform < RuntimeError ; end
+    class Dre::NilPlatform < RuntimeError ; end
 
     private
 
@@ -13,7 +13,7 @@ module Dre
     end
 
     def platform_header
-      request.header['X-User-Platform'].tap do |header|
+      request.headers['X-User-Platform'].tap do |header|
         raise Dre::NilPlatform unless header.present?
       end
     end

@@ -5,7 +5,7 @@ module Dre
     let(:user) { User.create }
 
     before :each do
-      request.env['X-User-Platform'] = 'iPhone'
+      request.headers['X-User-Platform'] = 'iPhone'
       allow(controller).to receive(:authenticate!) { true }
       allow(controller).to receive(:user) { user }
     end
@@ -48,28 +48,28 @@ module Dre
         end
 
         it 'detects iphones as the ios platform' do
-          request.env['X-User-Platform'] = 'iPhone'
+          request.headers['X-User-Platform'] = 'iPhone'
 
           put :register, format: :json, token: 'Test Token'
           expect(json['device']['platform']).to eq 'ios'
         end
 
         it 'detects ipads as the ios platform' do
-          request.env['X-User-Platform'] = 'iPad'
+          request.headers['X-User-Platform'] = 'iPad'
 
           put :register, format: :json, token: 'Test Token'
           expect(json['device']['platform']).to eq 'ios'
         end
 
         it 'detects androids as the android platform' do
-          request.env['X-User-Platform'] = 'Android'
+          request.headers['X-User-Platform'] = 'Android'
 
           put :register, format: :json, token: 'Test Token'
           expect(json['device']['platform']).to eq 'android'
         end
 
         it 'raises an error if no platform is specified' do
-          request.env['X-User-Platform'] = nil
+          request.headers['X-User-Platform'] = nil
 
           expect do
             put :register, format: :json, token: 'Test Token'
