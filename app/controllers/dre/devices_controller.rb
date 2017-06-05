@@ -2,7 +2,7 @@ require_dependency 'dre/application_controller'
 
 module Dre
   class DevicesController < ApplicationController
-    before_filter :authenticate!
+    before_action :authenticate!
 
     respond_to :json
 
