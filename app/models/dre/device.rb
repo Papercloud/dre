@@ -3,7 +3,8 @@ module Dre
     # OS:
     enum platform: {
       ios: 1,
-      android: 2
+      android: 2,
+      expo: 3
     }
 
     # Associations:

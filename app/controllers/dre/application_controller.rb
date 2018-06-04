@@ -9,6 +9,8 @@ module Dre
         :ios
       elsif android?
         :android
+      elsif expo?
+        :expo
       end
     end
 
@@ -24,6 +26,10 @@ module Dre
 
     def android?
       !!(platform_header.downcase =~ /android/)
+    end
+
+    def expo?
+      !!(platform_header.downcase =~ /expo/)
     end
   end
 end
